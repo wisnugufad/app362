@@ -22,25 +22,31 @@ hide_table_row_index = """
 # Inject CSS with Markdown
 st.markdown(hide_table_row_index, unsafe_allow_html=True)
 
-year = st.selectbox('What year you want to visualize ?',('---- Select ----','2020', '2021'), key='year')
+# year = st.selectbox('What year you want to visualize ?',('---- Select ----','2020', '2021'), key='year')
 
 coloum_array = (
         '---- Select ----',
-        'Tahap Pmb',
-        'Asal Sekolah',
-        'Pilihan Prodi 1',
-        'Pilihan Prodi 2'
+        'TAHAP PMB',
+        'ASAL SEKOLAH',
+        'PILIHAN PRODI 1',
+        'PILIHAN PRODI 2',
+        'PEKERJAAN AYAH',
+        'PEKERJAAN IBU',
+        'PROVINSI',
+        'JENIS KELAMIN',
+        'AGAMA'
     )
 
 coloum = st.selectbox('How would you like to be filter?', coloum_array, key='filter')
 
 if coloum != '---- Select ----' :
-    if coloum == 'Tahap Pmb':
-        vs.asal_sekolah()
-    elif coloum == 'Asal Sekolah':
-        vs.unit()
-    elif coloum == 'Pilihan Prodi 1':
-        vs.jurusan_pertama()
+    vs.get_visual(coloum)
+    # if coloum == 'Tahap Pmb':
+    #     vs.asal_sekolah()
+    # elif coloum == 'Asal Sekolah':
+    #     vs.unit()
+    # elif coloum == 'Pilihan Prodi 1':
+    #     vs.jurusan_pertama()
     # st.dataframe(df)
     # st.table(df)
     
