@@ -1,3 +1,4 @@
+from turtle import title
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -18,7 +19,9 @@ def get_visual(kriteria):
 
     df = xls.groupby([kriteria])[kriteria].count()
 
-    pie_chart = px.pie(df, title="Data Masuk mahasiswa berdasarkan tahap PMB", values=kriteria, names=cell_name)
+    title = "DATA MASUK MAHASISWA BERDASARKAN " + kriteria
+
+    pie_chart = px.pie(df, title=title, values=kriteria, names=cell_name)
     st.plotly_chart(pie_chart)
     
     cell_name.insert(0, "---- Select ----")
