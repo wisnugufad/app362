@@ -34,7 +34,8 @@ coloum_array = (
         'PEKERJAAN IBU',
         'PROVINSI',
         'JENIS KELAMIN',
-        'AGAMA'
+        'AGAMA',
+        'PROGRAM DITERIMA'
     )
 
 coloum = st.selectbox('How would you like to be filter?', coloum_array, key='filter')

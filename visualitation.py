@@ -5,6 +5,7 @@ import plotly.express as px
 
 def get_visual(kriteria):
     read_xls = pd.read_excel('data.xlsx', sheet_name='Sheet1')
+
     xls = pd.DataFrame(read_xls, columns=['TAHAP PMB',
         'ASAL SEKOLAH',
         'PILIHAN PRODI 1',
@@ -13,26 +14,50 @@ def get_visual(kriteria):
         'PEKERJAAN IBU',
         'PROVINSI',
         'JENIS KELAMIN',
-        'AGAMA'])
+        'AGAMA',
+        'TAHUN',
+        'PROGRAM DITERIMA'])
     xls.dropna(inplace=True)
-    cell_name = xls[kriteria].unique().tolist()
 
-    df = xls.groupby([kriteria])[kriteria].count()
+    tahun = xls['TAHUN'].unique().tolist()
+    tahun.insert(0, "---- Select ----")
+
+    year = st.selectbox('What year ?',tahun, key='year')
+
+    if year != '---- Select ----':
+        xls = xls.loc[xls['TAHUN']==year]
+        df = xls.groupby([kriteria])[kriteria].count()
+    else:
+        df = xls.groupby([kriteria])[kriteria].count()
+
+    cell_name = xls[kriteria].unique().tolist()
+    
 
     title = "DATA MASUK MAHASISWA BERDASARKAN " + kriteria
 
     pie_chart = px.pie(df, title=title, values=kriteria, names=cell_name)
     st.plotly_chart(pie_chart)
     
+
+    cell_name = xls[kriteria].unique().tolist()
+
+    # df = px.data.tips()
+    # fig = px.bar(df, x=cell_name, y='PROGRAM DITERIMA', barmode="group")
+    # st.plotly_chart(fig)
+    # fig.show()
+    
     cell_name.insert(0, "---- Select ----")
 
     coloum_filter = st.selectbox('How would you like to be filter?', cell_name, key='filter_dataframe')
     
-    if coloum_filter != '---- Select ----' :
-        rs_df = xls.loc[xls[kriteria] == coloum_filter]
+    if year != '---- Select ----':
+        if coloum_filter != '---- Select ----' :
+            rs_df = xls.loc[xls[kriteria] == coloum_filter, xls['TAHUN']==year]
+        else:
+            rs_df = xls.loc[xls['TAHUN']==year]
     else:
         rs_df = xls
-    
+        
     st.dataframe(rs_df)
 
 # def asal_sekolah():
